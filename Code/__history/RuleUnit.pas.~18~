@@ -1,0 +1,57 @@
+Unit RuleUnit;
+
+Interface
+
+Uses
+    Winapi.Windows,
+    System.Classes,
+    Vcl.Controls, Vcl.Forms, Vcl.ExtCtrls, Vcl.StdCtrls,
+    FrontEndMenuUnit, Vcl.Graphics;
+
+Type
+    TRuleForm = Class(TForm)
+        BackgroundImage: TImage;
+        TitleLabel: TLabel;
+        RuleLabel: TLabel;
+        BackImage: TImage;
+
+        Procedure CreateParams(Var Params: TCreateParams); Override;
+        Procedure FormShow(Sender: TObject);
+
+        Procedure BackImageClick(Sender: TObject);
+    Private
+        { Private declarations }
+    Public
+        { Public declarations }
+    End;
+
+Var
+    RuleForm: TRuleForm;
+
+Implementation
+
+{$R *.dfm}
+
+Procedure TRuleForm.CreateParams(Var Params: TCreateParams);
+Begin
+    Inherited;
+    Params.ExStyle := Params.ExStyle Or WS_EX_APPWINDOW;
+End;
+
+
+Procedure TRuleForm.FormShow(Sender: TObject);
+Begin
+    Width := Screen.Width;
+    Height := Screen.Height;
+
+    CalculateRuleFormSizes();
+    DrawButton(RuleForm, BackImage, 'Назад');
+End;
+
+
+Procedure TRuleForm.BackImageClick(Sender: TObject);
+Begin
+    Close;
+End;
+
+End.

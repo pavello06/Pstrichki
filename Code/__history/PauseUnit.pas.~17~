@@ -1,0 +1,72 @@
+Unit PauseUnit;
+
+Interface
+
+Uses
+    Winapi.Windows,
+    System.Classes,
+    Vcl.Forms, Vcl.ExtCtrls,
+    FrontEndMenuUnit,
+    StartUnit, Vcl.Graphics, Vcl.Controls;
+
+Type
+    TPauseForm = Class(TForm)
+        BackgroundImage: TImage;
+        ContinueImage: TImage;
+        BackImage: TImage;
+
+        Procedure FormShow(Sender: TObject);
+        Function FormHelp(Command: Word; Data: NativeInt; Var CallHelp: Boolean): Boolean;
+
+        Procedure ContinueImageClick(Sender: TObject);
+        Procedure BackImageClick(Sender: TObject);
+    Private
+        { Private declarations }
+    Public
+        { Public declarations }
+    End;
+
+Var
+    PauseForm: TPauseForm;
+
+Implementation
+
+{$R *.dfm}
+
+Uses
+    GameUnit;
+
+Procedure TPauseForm.FormShow(Sender: TObject);
+Begin
+    Width := 800;
+    Height := 800;
+
+    CalculatePauseFormSizes();
+    DrawButton(PauseForm, ContinueImage, 'Продолжить');
+    DrawButton(PauseForm, BackImage, 'В главное меню');
+
+    Width := 800;
+    Height := 300;
+End;
+
+Function TPauseForm.FormHelp(Command: Word; Data: NativeInt; Var CallHelp: Boolean): Boolean;
+Begin
+    CallHelp := False;
+    FormHelp := False;
+End;
+
+
+Procedure TPauseForm.ContinueImageClick(Sender: TObject);
+Begin
+    Close;
+End;
+
+Procedure TPauseForm.BackImageClick(Sender: TObject);
+Begin
+    GameForm.Visible := False;
+    Close;
+    StartForm := TStartForm.Create(GameForm);
+    StartForm.ShowModal;
+End;
+
+End.

@@ -1,0 +1,18 @@
+program Pstrichki;
+
+uses
+  Vcl.Forms,
+  GameUnit in 'GameUnit.pas' {GameForm},
+  FrontEndGameUnit in 'FrontEndGameUnit.pas',
+  BackEndGameUnit in 'BackEndGameUnit.pas',
+  CheckerListUnit in 'CheckerListUnit.pas',
+  Unit1 in 'Unit1.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TGameForm, GameForm);
+  Application.Run;
+end.

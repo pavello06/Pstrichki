@@ -1,0 +1,108 @@
+Unit StartUnit;
+
+Interface
+
+Uses
+    Winapi.Windows,
+    System.Classes,
+    Vcl.Controls, Vcl.Forms, Vcl.StdCtrls, Vcl.ExtCtrls,
+    FrontEndMenuUnit,
+    SettingsUnit, RuleUnit, Vcl.Graphics;
+
+Type
+    TStartForm = Class(TForm)
+        BackgroundImage: TImage;
+        TitleLabel: TLabel;
+        GameImage: TImage;
+        SettingsImage: TImage;
+        RuleImage: TImage;
+        ExitImage: TImage;
+
+        Procedure CreateParams(Var Params: TCreateParams); Override;
+        Procedure FormShow(Sender: TObject);
+        Procedure FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
+        Function FormHelp(Command: Word; Data: NativeInt; Var CallHelp: Boolean): Boolean;
+
+        Procedure GameImageClick(Sender: TObject);
+        Procedure RuleImageClick(Sender: TObject);
+        Procedure SettingsImageClick(Sender: TObject);
+        Procedure ExitImageClick(Sender: TObject);
+    Private
+        { Private declarations }
+    Public
+        { Public declarations }
+    End;
+
+Var
+    StartForm: TStartForm;
+
+    IsClose: Boolean = True;
+
+Implementation
+
+{$R *.dfm}
+
+Uses
+    GameUnit;
+
+Procedure TStartForm.CreateParams(Var Params: TCreateParams);
+Begin
+    Inherited;
+    Params.ExStyle := Params.ExStyle Or WS_EX_APPWINDOW;
+End;
+
+Procedure TStartForm.FormShow(Sender: TObject);
+Begin
+    CalculateStartFormSizes();
+    DrawButton(StartForm, GameImage, 'Играть');
+    DrawButton(StartForm, SettingsImage, 'Настройки');
+    DrawButton(StartForm, RuleImage, 'Правила');
+    DrawButton(StartForm, ExitImage, 'Выйти');
+End;
+
+Procedure TStartForm.FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
+Begin
+    If IsClose Then
+    Begin
+        GameForm.Close;
+        CanClose := False;
+        IsClose := True;
+    End;
+End;
+
+Function TStartForm.FormHelp(Command: Word; Data: NativeInt; Var CallHelp: Boolean): Boolean;
+Begin
+    CallHelp := False;
+    FormHelp := False;
+End;
+
+
+Procedure TStartForm.GameImageClick(Sender: TObject);
+Begin
+    GameForm.Visible := True;
+    IsClose := False;
+    Close;
+End;
+
+Procedure TStartForm.SettingsImageClick(Sender: TObject);
+Begin
+    StartForm.Visible := False;
+    SettingsForm := TSettingsForm.Create(GameForm);
+    SettingsForm.ShowModal;
+    StartForm.Visible := True;
+End;
+
+Procedure TStartForm.RuleImageClick(Sender: TObject);
+Begin
+    StartForm.Visible := False;
+    RuleForm := TRuleForm.Create(GameForm);
+    RuleForm.ShowModal;
+    StartForm.Visible := True;
+End;
+
+Procedure TStartForm.ExitImageClick(Sender: TObject);
+Begin
+    GameForm.Close
+End;
+
+End.

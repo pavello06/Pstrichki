@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.687,C:\BSUIR\OAiP\Сoursework\Code\WinUnit.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.296,=C:\BSUIR\OAiP\Сoursework\Code\WinUnit.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.250,C:\BSUIR\OAiP\Сoursework\Code\WinUnit.pas=C:\BSUIR\OAiP\Сoursework\Code\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.639,C:\BSUIR\OAiP\Сoursework\type end — копия\SettingsUnit.pas=C:\BSUIR\OAiP\Сoursework\type end — копия\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.639,C:\BSUIR\OAiP\Сoursework\type end — копия\SettingsUnit.dfm=C:\BSUIR\OAiP\Сoursework\type end — копия\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.552,=C:\BSUIR\OAiP\Сoursework\type end — копия\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.377,=C:\BSUIR\OAiP\Сoursework\type end — копия\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.250,C:\BSUIR\OAiP\Сoursework\Code\WinUnit.dfm=C:\BSUIR\OAiP\Сoursework\Code\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.555,C:\BSUIR\OAiP\Сoursework\type end — копия\RuleUnit.pas=C:\BSUIR\OAiP\Сoursework\type end — копия\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.555,C:\BSUIR\OAiP\Сoursework\type end — копия\RuleUnit.dfm=C:\BSUIR\OAiP\Сoursework\type end — копия\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.668,=C:\BSUIR\OAiP\Сoursework\type end\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.209,=C:\BSUIR\OAiP\Сoursework\type end\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.273,=C:\BSUIR\OAiP\Сoursework\type end\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.008,=C:\BSUIR\OAiP\Сoursework\type end\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.534,C:\BSUIR\OAiP\Сoursework\type end\Unit1.pas=C:\BSUIR\OAiP\Сoursework\type end\BackEndGameUnit.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.858,C:\BSUIR\OAiP\Сoursework\type end — копия\StartUnit.pas=C:\BSUIR\OAiP\Сoursework\type end — копия\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.783,C:\BSUIR\OAiP\Сoursework\type end\ListUnit.pas=C:\BSUIR\OAiP\Сoursework\type end\CheckerListUnit.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.882,C:\BSUIR\OAiP\Сoursework\type end\Unit1.pas=C:\BSUIR\OAiP\Сoursework\type end\ListUnit.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.901,C:\BSUIR\OAiP\Сoursework\type end\Unit1.pas=C:\BSUIR\OAiP\Сoursework\type end\BackEndGameUnit.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.975,=C:\BSUIR\OAiP\Сoursework\type end — копия\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.112,C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\FrontEndGameUnit.pas=C:\BSUIR\OAiP\Сoursework\type end\FrontEndGameUnit.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.814,C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\GameUnit.pas=C:\BSUIR\OAiP\Сoursework\type end\GameUnit.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.498,C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\GameUnit.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.536,=C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.049,C:\BSUIR\OAiP\Сoursework\type end\BackEndGameUnit.pas=C:\BSUIR\OAiP\Сoursework\type end\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.498,C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\GameUnit.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.146,C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\BSUIR\OAiP\Сoursework\type end\Pstrichki.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.869,C:\BSUIR\OAiP\Сoursework\type end\BackEndGameUnit.pas=C:\BSUIR\OAiP\Сoursework\type end\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.439,C:\BSUIR\OAiP\Сoursework\type end\BackEndGameUnit.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.333,=C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.265,C:\BSUIR\OAiP\Сoursework\type end — копия\FrontEndMenuUnit.pas=C:\BSUIR\OAiP\Сoursework\type end — копия\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.814,C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\GameUnit.dfm=C:\BSUIR\OAiP\Сoursework\type end\GameUnit.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.858,C:\BSUIR\OAiP\Сoursework\type end — копия\StartUnit.dfm=C:\BSUIR\OAiP\Сoursework\type end — копия\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.482,=C:\BSUIR\OAiP\Сoursework\type end — копия\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.232,C:\BSUIR\OAiP\Сoursework\Code\Unit1.pas=C:\BSUIR\OAiP\Сoursework\Code\PauseUnit.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.597,C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\Unit2.pas=C:\Users\Pavel\Documents\Embarcadero\Studio\Projects\FrontEndGameUnit.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.232,C:\BSUIR\OAiP\Сoursework\Code\Unit1.dfm=C:\BSUIR\OAiP\Сoursework\Code\PauseUnit.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.144,=C:\BSUIR\OAiP\Сoursework\Code\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.998,=C:\BSUIR\OAiP\Сoursework\Code\Unit1.pas</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="GameUnit.pas"/>
+    <File Path="GameUnit.dfm"/>
+    <File Path="FrontEndGameUnit.pas"/>
+    <File Path="BackEndGameUnit.pas"/>
+    <File Path="CheckerListUnit.pas"/>
+    <File Path="StartUnit.pas"/>
+    <File Path="StartUnit.dfm"/>
+    <File Path="SettingsUnit.pas"/>
+    <File Path="SettingsUnit.dfm"/>
+    <File Path="RuleUnit.pas"/>
+    <File Path="RuleUnit.dfm"/>
+    <File Path="PauseUnit.pas"/>
+    <File Path="PauseUnit.dfm"/>
+    <File Path="WinUnit.pas"/>
+    <File Path="WinUnit.dfm"/>
+    <File Path="FrontEndMenuUnit.pas"/>
+  </ProjectSortOrder>
+</BorlandProject>

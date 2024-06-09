@@ -1,0 +1,29 @@
+Unit WinUnit;
+
+Interface
+
+Uses
+    Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+    System.Classes, Vcl.Graphics,
+    Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+Type
+    TWinForm = Class(TForm)
+        BackgroundImage: TImage;
+        ContinueImage: TImage;
+        CheckerImage: TImage;
+        WinLabel: TLabel;
+    Private
+        { Private declarations }
+    Public
+        { Public declarations }
+    End;
+
+Var
+    WinForm: TWinForm;
+
+Implementation
+
+{$R *.dfm}
+
+End.

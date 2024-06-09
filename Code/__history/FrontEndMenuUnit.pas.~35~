@@ -1,0 +1,221 @@
+Unit FrontEndMenuUnit;
+
+Interface
+
+Uses
+    Vcl.ExtCtrls, Vcl.Forms, Vcl.Graphics, Vcl.StdCtrls;
+
+Procedure CalculateStartFormSizes();
+
+Procedure CalculateSettingsFormSizes();
+
+Procedure CalculateRuleFormSizes();
+
+Procedure CalculatePauseFormSizes();
+
+Procedure DrawButton(Const Form: TForm; Button: TImage; Const Text: String);
+
+Implementation
+
+Uses
+    StartUnit, SettingsUnit, RuleUnit, PauseUnit;
+
+Const
+    BASED_CLIENT_WIDTH : Integer = 600;
+    BASED_CLIENT_HEIGHT : Integer = 600;
+
+    BASED_TITLE_FONT_SIZE : Integer = 60;
+    BASED_TITLE_MARGIN : Integer = 40;
+
+    BASED_BUTTON_WIDTH : Integer = 300;
+    BASED_BUTTON_HEIGHT : Integer = 70;
+    BASED_BUTTON_FONT_SIZE : Integer = 20;
+    BASED_BUTTON_MARGIN : Integer = 20;
+    BASED_BUTTON_PEN_WIDTH : Integer = 10;
+
+    BASED_AUDIO_SIZE : Integer = 200;
+    BASED_AUDIO_MARGIN : Integer = 50;
+
+    BASED_RULE_WIDTH : Integer = 800;
+    BASED_RULE_FONT_SIZE : Integer = 15;
+    BASED_RULE_MARGIN : Integer = 20;
+
+
+    BORDER_COLOR : TColor = $14429C;
+    BUTTON_LIGHT_COLOR : TColor = $A4CAEC;
+    BUTTON_DARK_COLOR : TColor = $0C367C;
+
+Procedure CalculateFormSizes(Const Form: TForm);
+Begin
+    With Form Do
+    Begin
+        Width := Screen.Width;
+        Height := Screen.Height;
+
+        Constraints.MinWidth := Width;
+        Constraints.MinHeight := Height;
+        Constraints.MaxWidth := Width;
+        Constraints.MaxHeight := Height;
+    End;
+End;
+
+Function CalculateRatioCoefficient(Const Form: TForm) : Real;
+Var
+    RatioCoefficient: Real;
+Begin
+    If (Form.ClientWidth / Form.ClientHeight) < (BASED_CLIENT_WIDTH / BASED_CLIENT_HEIGHT) Then
+        RatioCoefficient := Form.ClientWidth / BASED_CLIENT_WIDTH
+    Else
+        RatioCoefficient := Form.ClientHeight / BASED_CLIENT_HEIGHT;
+    Result := RatioCoefficient;
+End;
+
+Procedure CalculateTitleSizes(Const Form: TForm; Const TitleLabel: TLabel; Const RatioCoefficient: Real);
+Begin
+    With TitleLabel Do
+    Begin
+        Font.Size := Round(BASED_TITLE_FONT_SIZE * RatioCoefficient);
+        Left := (Form.ClientWidth - Width) Div 2;
+        Top := Round(BASED_TITLE_MARGIN * RatioCoefficient);
+    End;
+End;
+
+Procedure CalculateButtonSizes(Const Form: TForm; Button: TImage; Const RatioCoefficient: Real; Const ButtonTop: Integer);
+Begin
+    With Button Do
+    Begin
+        Width := Round(BASED_BUTTON_WIDTH * RatioCoefficient);
+        Height := Round(BASED_BUTTON_HEIGHT * RatioCoefficient);
+        Left := (Form.ClientWidth - Width) Div 2;
+        Top := ButtonTop;
+    End;
+End;
+
+
+Procedure CalculateStartFormSizes();
+Var
+    RatioCoefficient: Real;
+    ButtonMargin, ButtonTop: Integer;
+Begin
+    CalculateFormSizes(StartForm);
+
+    With StartForm Do
+    Begin
+        RatioCoefficient := CalculateRatioCoefficient(StartForm);
+
+        CalculateTitleSizes(StartForm, TitleLabel, RatioCoefficient);
+
+        ButtonMargin := Round(BASED_BUTTON_MARGIN * RatioCoefficient);
+        ButtonTop := TitleLabel.Top + TitleLabel.Height + Round(BASED_TITLE_MARGIN * RatioCoefficient);
+        CalculateButtonSizes(StartForm, GameImage, RatioCoefficient, ButtonTop);
+        ButtonTop := ButtonTop + GameImage.Height + ButtonMargin;
+        CalculateButtonSizes(StartForm, SettingsImage, RatioCoefficient, ButtonTop);
+        ButtonTop := ButtonTop + SettingsImage.Height + ButtonMargin;
+        CalculateButtonSizes(StartForm, RuleImage, RatioCoefficient, ButtonTop);
+        ButtonTop := ButtonTop + RuleImage.Height + ButtonMargin;
+        CalculateButtonSizes(StartForm, ExitImage, RatioCoefficient, ButtonTop);
+    End;
+End;
+
+
+Procedure CalculateAudioSizes(Const RatioCoefficient: Real);
+Begin
+    With SettingsForm.AudioImage Do
+    Begin
+        Width := Round(BASED_AUDIO_SIZE * RatioCoefficient);
+        Height := Width;
+        Left := (SettingsForm.ClientWidth - Width) Div 2;
+        Top := (SettingsForm.ClientHeight - Height) Div 2;
+    End;
+End;
+
+Procedure CalculateSettingsFormSizes();
+Var
+    RatioCoefficient: Real;
+    ButtonTop: Integer;
+Begin
+    CalculateFormSizes(SettingsForm);
+
+    With SettingsForm Do
+    Begin
+        RatioCoefficient := CalculateRatioCoefficient(SettingsForm);
+
+        CalculateTitleSizes(SettingsForm, TitleLabel, RatioCoefficient);
+
+        CalculateAudioSizes(RatioCoefficient);
+
+        ButtonTop := AudioImage.Top + AudioImage.Height + Round(BASED_AUDIO_MARGIN * RatioCoefficient);
+        CalculateButtonSizes(SettingsForm, BackImage, RatioCoefficient, ButtonTop);
+    End;
+End;
+
+
+Procedure CalculateRuleSizes(Const RatioCoefficient: Real);
+Begin
+    With RuleForm.RuleLabel Do
+    Begin
+        Width := Round(BASED_RULE_WIDTH * RatioCoefficient);
+        Font.Size := Round(BASED_RULE_FONT_SIZE * RatioCoefficient);
+        Left := (RuleForm.ClientWidth - Width) Div 2;
+        Top := RuleForm.TitleLabel.Top + RuleForm.TitleLabel.Height + Round(BASED_TITLE_MARGIN * RatioCoefficient);
+    End;
+End;
+
+Procedure CalculateRuleFormSizes();
+Var
+    RatioCoefficient: Real;
+    ButtonTop: Integer;
+Begin
+    CalculateFormSizes(RuleForm);
+
+    With RuleForm Do
+    Begin
+        RatioCoefficient := CalculateRatioCoefficient(RuleForm);
+
+        CalculateTitleSizes(RuleForm, TitleLabel, RatioCoefficient);
+
+        CalculateRuleSizes(RatioCoefficient);
+
+        ButtonTop := RuleLabel.Top + RuleLabel.Height + Round(BASED_RULE_MARGIN * RatioCoefficient);
+        CalculateButtonSizes(RuleForm, BackImage, RatioCoefficient, ButtonTop);
+    End;
+End;
+
+
+Procedure CalculatePauseFormSizes();
+Var
+    RatioCoefficient: Real;
+    ButtonTop: Integer;
+Begin
+    With PauseForm Do
+    Begin
+        RatioCoefficient := CalculateRatioCoefficient(PauseForm);
+
+        ButtonTop := Round(BASED_BUTTON_MARGIN * RatioCoefficient);
+        CalculateButtonSizes(PauseForm, ContinueImage, RatioCoefficient, ButtonTop);
+        ButtonTop := ButtonTop + ContinueImage.Top + ContinueImage.Height;
+        CalculateButtonSizes(PauseForm, BackImage, RatioCoefficient, ButtonTop);
+    End;
+End;
+
+
+Procedure DrawButton(Const Form: TForm; Button: TImage; Const Text: String);
+Var
+    RatioCoefficient: Real;
+Begin
+    RatioCoefficient := CalculateRatioCoefficient(Form);
+
+    With Button.Canvas Do
+    Begin
+        Font.Size := Round(BASED_BUTTON_FONT_SIZE * RatioCoefficient);;
+        Font.Color := BUTTON_DARK_COLOR;
+        Font.Style := [fsBold];
+        Pen.Width := Round(BASED_BUTTON_PEN_WIDTH * RatioCoefficient);
+        Pen.Color := BORDER_COLOR;
+        Brush.Color := BUTTON_LIGHT_COLOR;
+        Rectangle(0, 0, Button.Width, Button.Height);
+        TextOut((Button.Width - TextWidth(Text)) Div 2, (Button.Height - TextHeight(Text)) Div 2, Text);
+    End;
+End;
+
+End.

@@ -1,0 +1,105 @@
+Unit Unit1;
+
+Interface
+
+Uses
+    CheckerListUnit;
+
+Type
+    TTurn = (Light, Dark);
+
+Var
+    LightCheckerList, DarkCheckerList: TCheckerList;
+    Turn: TTurn = Light;
+
+Implementation
+
+Uses
+    GameUnit, FrontEndGameUnit;
+
+Var
+    IsMoving: Boolean = False;
+    ClickedChecker: PChecker = Nil;
+    MouseDownPosition, MouseUpPosition: TPosition;
+
+Procedure CreateCheckers(Const CheckerList: TCheckerList; Const InitialY: Integer);
+Var
+    Parameters: TParameters;
+    I: Integer;
+Begin
+    CheckerList.Initialize();
+
+    With Parameters Do
+    Begin
+        Position.X := BorderSize + CellSize Div 2;
+        Position.Y := InitialY;
+        Speed.X := 0;
+        Speed.Y := 0;
+    End;
+
+    For I := 1 To INITIAL_CHECKERS_AMOUNT Do
+    Begin
+        CheckerList.AddChecker(Parameters);
+        Parameters.Position.X := Parameters.Position.X + CellSize;
+    End;
+End;
+
+Procedure CreateLightDarkCheckers();
+Var
+    InitialY: Integer;
+Begin
+    InitialY := BoardSize - (BorderSize + CellSize Div 2);
+    CreateCheckers(LightCheckerList, InitialY);
+    InitialY := BorderSize + CellSize Div 2;
+    CreateCheckers(DarkCheckerList, InitialY);
+End;
+
+
+Function CalculateMaxDistance() : Integer;
+Begin
+    Result := CheckerRadius * 4;
+End;
+
+
+Function FindCheckerByClickPosition(Const CheckerList: TCheckerList; Const ClickPosition: TPosition) : PChecker;
+Var
+    CurrChecker: PChecker;
+Begin
+    CurrChecker := CheckerList.Head;
+    With CurrChecker.Parameters Do
+        While (CurrChecker <> Nil) And
+              ((Abs(Position.X - ClickPosition.X) > CheckerRadius) Or
+               (Abs(Position.Y - ClickPosition.Y) > CheckerRadius)) Do
+            CurrChecker := CurrChecker^.Next;
+    Result := CurrChecker;
+End;
+
+Procedure MouseDown(Const ClickPosition: TPosition);
+Var
+    CheckerList: TCheckerList;
+Begin
+    If Turn = Light Then
+        CheckerList := LightCheckerList
+    Else
+        CheckerList := DarkCheckerList;
+
+    ClickedChecker := FindCheckerByClickPosition(CheckerList, ClickPosition);
+
+    If Not IsMoving And (ClickedChecker <> Nil) Then
+        MouseDownPosition := ClickPosition;
+End;
+
+
+Procedure MouseUp(Const ClickPosition: TPosition);
+Begin
+    If Not IsMoving And (ClickedChecker <> Nil) Then
+        MouseUpPosition := ClickPosition;
+End;
+
+
+
+
+
+
+
+End.

@@ -1,0 +1,99 @@
+Unit StartUnit;
+
+Interface
+
+Uses
+    Winapi.Windows,
+    System.Classes,
+    Vcl.Controls, Vcl.ExtCtrls, Vcl.Forms, Vcl.Graphics, Vcl.StdCtrls,
+    FrontEndMenuUnit,
+    SettingsUnit, RuleUnit;
+
+Type
+    TStartForm = Class(TForm)
+        BackgroundImage: TImage;
+        TitleLabel: TLabel;
+        GameImage: TImage;
+        SettingsImage: TImage;
+        RuleImage: TImage;
+        ExitImage: TImage;
+
+        Procedure CreateParams(Var Params: TCreateParams); Override;
+        Procedure FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
+        Function FormHelp(Command: Word; Data: NativeInt; Var CallHelp: Boolean): Boolean;
+
+        Procedure GameImageClick(Sender: TObject);
+        Procedure RuleImageClick(Sender: TObject);
+        Procedure SettingsImageClick(Sender: TObject);
+        Procedure ExitImageClick(Sender: TObject);
+    Private
+        { Private declarations }
+    Public
+        { Public declarations }
+    End;
+
+Var
+    StartForm: TStartForm;
+
+Implementation
+
+{$R *.dfm}
+
+Uses
+    GameUnit;
+
+Var
+    IsClose: Boolean = True;
+
+Procedure TStartForm.CreateParams(Var Params: TCreateParams);
+Begin
+    Inherited;
+    Params.ExStyle := Params.ExStyle Or WS_EX_APPWINDOW;
+End;
+
+Procedure TStartForm.FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
+Begin
+    If IsClose Then
+    Begin
+        CanClose := False;
+        GameForm.Close;
+    End;
+
+    IsClose := True;
+End;
+
+Function TStartForm.FormHelp(Command: Word; Data: NativeInt; Var CallHelp: Boolean): Boolean;
+Begin
+    CallHelp := False;
+    FormHelp := False;
+End;
+
+
+Procedure TStartForm.GameImageClick(Sender: TObject);
+Begin
+    IsClose := False;
+
+    StartGame();
+    GameForm.Visible := True;
+
+    Close;
+End;
+
+Procedure TStartForm.SettingsImageClick(Sender: TObject);
+Begin
+    SettingsForm.Visible := True;
+    Visible := False;
+End;
+
+Procedure TStartForm.RuleImageClick(Sender: TObject);
+Begin
+    RuleForm.Visible := True;
+    Visible := False;
+End;
+
+Procedure TStartForm.ExitImageClick(Sender: TObject);
+Begin
+    GameForm.Close;
+End;
+
+End.

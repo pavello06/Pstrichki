@@ -1,0 +1,285 @@
+Unit Unit1;
+
+Interface
+
+Uses
+    CheckerListUnit;
+
+Type
+    TTurn = (Light, Dark);
+
+Var
+    LightCheckerList, DarkCheckerList: TCheckerList;
+    Turn: TTurn = Light;
+
+Procedure CheckerMouseDown(Const ClickPosition: TPosition);
+Procedure CheckerMouseUp(Const ClickPosition: TPosition);
+
+Procedure StartMoving();
+
+Implementation
+
+Uses
+    GameUnit, FrontEndGameUnit;
+
+Var
+    IsMoving: Boolean = False;
+    ClickedChecker: PChecker = Nil;
+    MouseDownPosition, MouseUpPosition: TPosition;
+
+Procedure CreateCheckers(Const CheckerList: TCheckerList; Const InitialY: Integer);
+Var
+    Parameters: TParameters;
+    I: Integer;
+Begin
+    CheckerList.Initialize();
+
+    With Parameters Do
+    Begin
+        Position.X := BorderSize + CellSize Div 2;
+        Position.Y := InitialY;
+        Speed.X := 0;
+        Speed.Y := 0;
+    End;
+
+    For I := 1 To INITIAL_CHECKERS_AMOUNT Do
+    Begin
+        CheckerList.AddChecker(Parameters);
+        Parameters.Position.X := Parameters.Position.X + CellSize;
+    End;
+End;
+
+Procedure CreateLightDarkCheckers();
+Var
+    InitialY: Integer;
+Begin
+    InitialY := BoardSize - (BorderSize + CellSize Div 2);
+    CreateCheckers(LightCheckerList, InitialY);
+    InitialY := BorderSize + CellSize Div 2;
+    CreateCheckers(DarkCheckerList, InitialY);
+End;
+
+
+Function FindCheckerByClickPosition(Const CheckerList: TCheckerList; Const ClickPosition: TPosition) : PChecker;
+Var
+    CurrChecker: PChecker;
+Begin
+    CurrChecker := CheckerList.Head;
+    With CurrChecker.Parameters Do
+        While (CurrChecker <> Nil) And
+              ((Abs(Position.X - ClickPosition.X) > CheckerRadius) Or
+               (Abs(Position.Y - ClickPosition.Y) > CheckerRadius)) Do
+            CurrChecker := CurrChecker^.Next;
+    Result := CurrChecker;
+End;
+
+Procedure CheckerMouseDown(Const ClickPosition: TPosition);
+Var
+    CheckerList: TCheckerList;
+Begin
+    If Turn = Light Then
+        CheckerList := LightCheckerList
+    Else
+        CheckerList := DarkCheckerList;
+
+    ClickedChecker := FindCheckerByClickPosition(CheckerList, ClickPosition);
+
+    If Not IsMoving And (ClickedChecker <> Nil) Then
+        MouseDownPosition := ClickPosition;
+End;
+
+
+Procedure CheckerMouseUp(Const ClickPosition: TPosition);
+Begin
+    If Not IsMoving And (ClickedChecker <> Nil) Then
+    Begin
+        MouseUpPosition := ClickPosition;
+    End;
+End;
+
+
+Function CalculateMaxDistance() : Integer;
+Begin
+    Result := CheckerRadius * 4;
+End;
+
+Procedure CalculateClickedCheckerSpeed();
+Var
+    MaxDistance, Distance: Integer;
+Begin
+    MaxDistance := CalculateMaxDistance();
+
+    Distance := Round(Sqrt(Sqr(MouseDownPosition.X - MouseUpPosition.X) + Sqr(MouseDownPosition.Y - MouseUpPosition.Y)));
+
+    With ClickedChecker.Parameters Do
+    Begin
+        If Distance > MaxDistance Then
+        Begin
+            Speed.X := MaxDistance * (MouseDownPosition.X - MouseUpPosition.X) / Distance;
+            Speed.Y := MaxDistance * (MouseDownPosition.Y - MouseUpPosition.Y) / Distance;
+        End
+        Else
+        Begin
+            Speed.X := MouseDownPosition.X - MouseUpPosition.X;
+            Speed.Y := MouseDownPosition.Y - MouseUpPosition.Y;
+        End;
+    End;
+End;
+
+Procedure StartMoving();
+Begin
+    CalculateClickedCheckerSpeed();
+    IsMoving := True;
+    GameForm.MovingTimer.Enabled := True;
+End;
+
+
+
+
+
+
+
+
+Function CheckCollision(Checker1, Checker2: PChecker) : Boolean;
+Var
+    Distance: Integer;
+Begin
+    Distance := Round(Sqrt(Sqr(Checker1.Parameters.Position.X - Checker2.Parameters.Position.X) + Sqr(Checker1.Parameters.Position.Y - Checker2.Parameters.Position.Y)));
+
+    Result := Distance <= CheckerRadius * 2;
+End;
+
+Procedure CalculateCheckersParametrs(Const CheckerList: TCheckerList);
+Var
+    CurrChecker: PChecker;
+Begin
+    CurrChecker := CheckerList.Head;
+    While CurrChecker <> Nil Do
+    Begin
+        With CurrChecker.Parameters Do
+        Begin
+            If Abs(Speed.X) > 15 Then
+            Begin
+                Position.X := Position.X + Speed.X;
+                Speed.X := Speed.X + Acceleration.X;
+            End;
+            If Abs(Speed.Y) > 15 Then
+            Begin
+                Position.Y := Position.Y + Speed.Y;
+                Speed.Y := Speed.Y + Acceleration.Y;
+            End;
+        End;
+        CurrChecker := CurrChecker^.Next;
+    End;
+End;
+
+Procedure CalculateLightDarkCheckersParametrs();
+Begin
+    CalculateCheckersParametrs(LightCheckerList);
+    CalculateCheckersParametrs(DarkCheckerList);
+End;
+
+
+Function IsStoppedCheckers(Const CheckerList: TCheckerList) : Boolean;
+Var
+    CurrChecker: PChecker;
+    IsStopped: Boolean;
+Begin
+    CurrChecker := CheckerList.Head;
+    IsStopped := True;
+    While (CurrChecker <> Nil) And IsStopped Do
+    Begin
+        With CurrChecker.Parameters.Speed Do
+            IsStopped := (Abs(X) < 15) And (Abs(Y) < 15);
+        CurrChecker := CurrChecker^.Next;
+    End;
+    Result := IsStopped;
+End;
+
+Function IsStoppedLightDarkCheckers() : Boolean;
+Begin
+    Result := IsStoppedCheckers(LightCheckerList) And IsStoppedCheckers(DarkCheckerList);
+End;
+
+
+
+
+Procedure CalculateCollision(Const Checker1, Checker2: PChecker);
+Var
+    CurrChecker1, CurrChecker2: PChecker;
+    XDistance, YDistance, Distance: Real;
+Begin
+    CurrChecker1 := Checker1;
+    While CurrChecker1 <> Nil Do
+    Begin
+        CurrChecker2 := Checker2;
+        While CurrChecker2 <> Nil Do
+        Begin
+            XDistance := Abs(CurrChecker1.Parameters.Position.X - CurrChecker2.Parameters.Position.X);
+            YDistance := Abs(CurrChecker1.Parameters.Position.Y - CurrChecker2.Parameters.Position.Y);
+            Distance := Sqrt(Sqr(XDistance) + Sqr(YDistance));
+            If (Distance <= CheckerRadius * 2) And (CurrChecker1 <> CurrChecker2) Then
+            Begin
+                CalculateCollisionSpeed(CurrChecker1, CurrChecker2);
+            End;
+            CurrChecker2 := CurrChecker2^.Next;
+        End;
+        CurrChecker1 := CurrChecker1^.Next;
+    End;
+End;
+
+Procedure CalculateLightDarkCollision();
+Begin
+    CalculateCollision(LightCheckerList.Head, DarkCheckerList.Head);
+    CalculateCollision(LightCheckerList.Head, LightCheckerList.Head);
+    CalculateCollision(DarkCheckerList.Head, DarkCheckerList.Head);
+End;
+
+
+Procedure KickCheckers(Var CheckerList: TCheckerList);
+Var
+    CurrChecker: PChecker;
+Begin
+    CurrChecker := CheckerList.Head;
+    While CurrChecker <> Nil Do
+    Begin
+        With CurrChecker.Parameters Do
+        Begin
+            If (Position.X < 0) Or (Position.X > BoardSize) Or (Position.Y < 0) Or (Position.Y > BoardSize) Then
+            Begin
+                CheckerList.DeleteChecker(CurrChecker.Parameters);
+                Break;
+            End;
+        End;
+        CurrChecker := CurrChecker^.Next;
+    End;
+End;
+
+Procedure KickLightDarkCheckers();
+Begin
+    KickCheckers(LightCheckerList);
+    KickCheckers(DarkCheckerList);
+End;
+
+
+Procedure StopMoving();
+Begin
+    ClickedChecker := Nil;
+    If Turn = Light Then
+        Turn := Dark
+    Else
+        Turn := Light;
+    IsMoving := False;
+    GameForm.MovingTimer.Enabled := False;
+End;
+
+Procedure Moving();
+Begin
+    CalculateLightDarkCollision();
+    CalculateLightDarkCheckersParametrs();
+    If IsStoppedLightDarkCheckers() Then
+        StopMoving();
+    KickLightDarkCheckers();
+End;
+
+End.

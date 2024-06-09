@@ -1,0 +1,74 @@
+Unit SettingsUnit;
+
+Interface
+
+Uses
+    System.Classes,
+    Vcl.Controls, Vcl.Forms, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Imaging.pngimage,
+    Vcl.MPlayer,
+    FrontEndMenuUnit, Vcl.Graphics;
+
+Type
+    TSettingsForm = Class(TForm)
+        BackgroundImage: TImage;
+        TitleLabel: TLabel;
+        AudioImage: TImage;
+        BackImage: TImage;
+
+        Procedure FormShow(Sender: TObject);
+
+        Procedure AudioImageClick(Sender: TObject);
+
+        Procedure BackImageClick(Sender: TObject);
+    Private
+        { Private declarations }
+    Public
+        { Public declarations }
+    End;
+
+Var
+    SettingsForm: TSettingsForm;
+
+Implementation
+
+{$R *.dfm}
+
+Uses
+    GameUnit;
+
+Procedure TSettingsForm.FormShow(Sender: TObject);
+Begin
+    Width := Screen.Width;
+    Height := Screen.Height;
+
+    CalculateSettingsFormSizes();
+    DrawButton(SettingsForm, BackImage, 'Назад');
+
+    If GameForm.MediaPlayer.Mode = mpPlaying Then
+        AudioImage.Picture.LoadFromFile('Images/AudioOn.png')
+    Else
+        AudioImage.Picture.LoadFromFile('Images/AudioOff.png');
+End;
+
+
+Procedure TSettingsForm.AudioImageClick(Sender: TObject);
+Begin
+    If GameForm.MediaPlayer.Mode = mpPlaying Then
+    Begin
+        AudioImage.Picture.LoadFromFile('Images/AudioOff.png');
+        GameForm.MediaPlayer.Stop;
+    End
+    Else
+    Begin
+        AudioImage.Picture.LoadFromFile('Images/AudioOn.png');
+        GameForm.MediaPlayer.Play;
+    End;
+End;
+
+
+Procedure TSettingsForm.BackImageClick(Sender: TObject);
+Begin
+    Close;
+End;
+
+End.
